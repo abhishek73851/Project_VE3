@@ -1,0 +1,29 @@
+<!-- analyzer/templates/analyzer/analyze_csv.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analyze CSV</title>
+</head>
+<body>
+    <h1>Data Analysis for {{ user.name }}</h1>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% else %}
+        <h2>First Few Rows</h2>
+        {{ head|safe }}
+
+        <h2>Summary Statistics</h2>
+        {{ description|safe }}
+
+        <h2>Missing Values</h2>
+        {{ missing_values|safe }}
+
+        <h2>Histograms</h2>
+        {% for column, image in histograms.items %}
+            <h3>{{ column }}</h3>
+            <img src="data:image/png;base64,{{ image }}" alt="Histogram for {{ column }}">
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
